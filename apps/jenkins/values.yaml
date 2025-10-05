@@ -1,0 +1,28 @@
+controller:
+  adminUser: admin
+  adminPassword: admin123
+  serviceType: ClusterIP
+  ingress:
+    enabled: true
+    apiVersion: networking.k8s.io/v1
+    ingressClassName: nginx
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+    hostName: jenkins.minikube.local
+    paths:
+      - /
+    tls:
+      - hosts:
+          - jenkins.minikube.local
+        secretName: jenkins-tls
+  installPlugins:
+    - kubernetes:4203.v1dd44f5b_1cf9
+    - workflow-aggregator
+    - git
+    - configuration-as-code
+    - job-dsl
+persistence:
+  enabled: true
+  storageClass: standard
+  size: 10Gi
+
